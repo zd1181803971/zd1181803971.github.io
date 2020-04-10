@@ -92,147 +92,11 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p><strong>1、回顾MVC</strong></p>
-<h3 id="1-1、什么是MVC"><a href="#1-1、什么是MVC" class="headerlink" title="1.1、什么是MVC"></a>1.1、什么是MVC</h3><ul>
-<li>MVC是模型(Model)、视图(View)、控制器(Controller)的简写，是一种软件设计规范。</li>
-<li>是将业务逻辑、数据、显示分离的方法来组织代码。</li>
-<li>MVC主要作用是<strong>降低了视图与业务逻辑间的双向偶合</strong>。</li>
-<li>MVC不是一种设计模式，<strong>MVC是一种架构模式</strong>。当然不同的MVC存在差异。</li>
-</ul>
-<p><strong>Model（模型）：</strong>数据模型，提供要展示的数据，因此包含数据和行为，可以认为是领域模型或JavaBean组件（包含数据和行为），不过现在一般都分离开来：Value Object（数据Dao） 和 服务层（行为Service）。也就是模型提供了模型数据查询和模型数据的状态更新等功能，包括数据和业务。</p>
-<p><strong>View（视图）：</strong>负责进行模型的展示，一般就是我们见到的用户界面，客户想看到的东西。</p>
-<p><strong>Controller（控制器）：</strong>接收用户请求，委托给模型进行处理（状态改变），处理完毕后把返回的模型数据返回给视图，由视图负责展示。也就是说控制器做了个调度员的工作。</p>
-<p><strong>最典型的MVC就是JSP + servlet + javabean的模式。</strong></p>
-<h3 id="1-2、Model1时代"><a href="#1-2、Model1时代" class="headerlink" title="1.2、Model1时代"></a>1.2、Model1时代</h3><ul>
-<li>在web早期的开发中，通常采用的都是Model1。</li>
-<li>Model1中，主要分为两层，视图层和模型层。</li>
-</ul>
-<p>Model1优点：架构简单，比较适合小型项目开发；</p>
-<p>Model1缺点：JSP职责不单一，职责过重，不便于维护；</p>
-<h3 id="1-3、Model2时代"><a href="#1-3、Model2时代" class="headerlink" title="1.3、Model2时代"></a>1.3、Model2时代</h3><p>Model2把一个项目分成三部分，包括<strong>视图、控制、模型。</strong></p>
-<ol>
-<li>用户发请求</li>
-<li>Servlet接收请求数据，并调用对应的业务逻辑方法</li>
-<li>业务处理完毕，返回更新后的数据给servlet</li>
-<li>servlet转向到JSP，由JSP来渲染页面</li>
-<li>响应给前端更新后的页面</li>
-</ol>
-<p><strong>职责分析：</strong></p>
-<p><strong>Controller：控制器</strong></p>
-<ol>
-<li>取得表单数据</li>
-<li>调用业务逻辑</li>
-<li>转向指定的页面</li>
-</ol>
-<p><strong>Model：模型</strong></p>
-<ol>
-<li>业务逻辑</li>
-<li>保存数据的状态</li>
-</ol>
-<p><strong>View：视图</strong></p>
-<ol>
-<li>显示页面</li>
-</ol>
-<p>Model2这样不仅提高的代码的复用率与项目的扩展性，且大大降低了项目的维护成本。Model 1模式的实现比较简单，适用于快速开发小规模项目，Model1中JSP页面身兼View和Controller两种角色，将控制逻辑和表现逻辑混杂在一起，从而导致代码的重用性非常低，增加了应用的扩展性和维护的难度。Model2消除了Model1的缺点。</p>
-<h3 id="1-4、回顾Servlet"><a href="#1-4、回顾Servlet" class="headerlink" title="1.4、回顾Servlet"></a>1.4、回顾Servlet</h3><ol>
-<li><p>新建一个Maven工程当做父工程！pom依赖！</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">&lt;dependencies&gt;</span><br><span class="line">   &lt;dependency&gt;</span><br><span class="line">       &lt;groupId&gt;junit&lt;&#x2F;groupId&gt;</span><br><span class="line">       &lt;artifactId&gt;junit&lt;&#x2F;artifactId&gt;</span><br><span class="line">       &lt;version&gt;4.12&lt;&#x2F;version&gt;</span><br><span class="line">   &lt;&#x2F;dependency&gt;</span><br><span class="line">   &lt;dependency&gt;</span><br><span class="line">       &lt;groupId&gt;org.springframework&lt;&#x2F;groupId&gt;</span><br><span class="line">       &lt;artifactId&gt;spring-webmvc&lt;&#x2F;artifactId&gt;</span><br><span class="line">       &lt;version&gt;5.1.9.RELEASE&lt;&#x2F;version&gt;</span><br><span class="line">   &lt;&#x2F;dependency&gt;</span><br><span class="line">   &lt;dependency&gt;</span><br><span class="line">       &lt;groupId&gt;javax.servlet&lt;&#x2F;groupId&gt;</span><br><span class="line">       &lt;artifactId&gt;servlet-api&lt;&#x2F;artifactId&gt;</span><br><span class="line">       &lt;version&gt;2.5&lt;&#x2F;version&gt;</span><br><span class="line">   &lt;&#x2F;dependency&gt;</span><br><span class="line">   &lt;dependency&gt;</span><br><span class="line">       &lt;groupId&gt;javax.servlet.jsp&lt;&#x2F;groupId&gt;</span><br><span class="line">       &lt;artifactId&gt;jsp-api&lt;&#x2F;artifactId&gt;</span><br><span class="line">       &lt;version&gt;2.2&lt;&#x2F;version&gt;</span><br><span class="line">   &lt;&#x2F;dependency&gt;</span><br><span class="line">   &lt;dependency&gt;</span><br><span class="line">       &lt;groupId&gt;javax.servlet&lt;&#x2F;groupId&gt;</span><br><span class="line">       &lt;artifactId&gt;jstl&lt;&#x2F;artifactId&gt;</span><br><span class="line">       &lt;version&gt;1.2&lt;&#x2F;version&gt;</span><br><span class="line">   &lt;&#x2F;dependency&gt;</span><br><span class="line">&lt;&#x2F;dependencies&gt;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>建立一个Moudle：springmvc-01-servlet ， 添加Web app的支持！</p>
-</li>
-<li><p>导入servlet 和 jsp 的 jar 依赖</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&lt;dependency&gt;</span><br><span class="line">   &lt;groupId&gt;javax.servlet&lt;&#x2F;groupId&gt;</span><br><span class="line">   &lt;artifactId&gt;servlet-api&lt;&#x2F;artifactId&gt;</span><br><span class="line">   &lt;version&gt;2.5&lt;&#x2F;version&gt;</span><br><span class="line">&lt;&#x2F;dependency&gt;</span><br><span class="line">&lt;dependency&gt;</span><br><span class="line">   &lt;groupId&gt;javax.servlet.jsp&lt;&#x2F;groupId&gt;</span><br><span class="line">   &lt;artifactId&gt;jsp-api&lt;&#x2F;artifactId&gt;</span><br><span class="line">   &lt;version&gt;2.2&lt;&#x2F;version&gt;</span><br><span class="line">&lt;&#x2F;dependency&gt;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>编写一个Servlet类，用来处理用户的请求</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">package com.kuang.servlet;</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F;实现Servlet接口</span><br><span class="line">public class HelloServlet extends HttpServlet &#123;</span><br><span class="line">   @Override</span><br><span class="line">   protected void doGet(HttpServletRequest req, HttpServletResponse resp) throwsServletException, IOException &#123;</span><br><span class="line">       &#x2F;&#x2F;取得参数</span><br><span class="line">       String method &#x3D; req.getParameter(&quot;method&quot;);</span><br><span class="line">       if (method.equals(&quot;add&quot;))&#123;</span><br><span class="line">           req.getSession().setAttribute(&quot;msg&quot;,&quot;执行了add方法&quot;);</span><br><span class="line">      &#125;</span><br><span class="line">       if (method.equals(&quot;delete&quot;))&#123;</span><br><span class="line">           req.getSession().setAttribute(&quot;msg&quot;,&quot;执行了delete方法&quot;);</span><br><span class="line">      &#125;</span><br><span class="line">       &#x2F;&#x2F;业务逻辑</span><br><span class="line">       &#x2F;&#x2F;视图跳转</span><br><span class="line">       req.getRequestDispatcher(&quot;&#x2F;WEB-INF&#x2F;jsp&#x2F;hello.jsp&quot;).forward(req,resp);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">   @Override</span><br><span class="line">   protected void doPost(HttpServletRequest req, HttpServletResponse resp) throwsServletException, IOException &#123;</span><br><span class="line">       doGet(req,resp);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>编写Hello.jsp，在WEB-INF目录下新建一个jsp的文件夹，新建hello.jsp</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&lt;%@ page contentType&#x3D;&quot;text&#x2F;html;charset&#x3D;UTF-8&quot; language&#x3D;&quot;java&quot; %&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">   &lt;title&gt;Kuangshen&lt;&#x2F;title&gt;</span><br><span class="line">&lt;&#x2F;head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">$&#123;msg&#125;</span><br><span class="line">&lt;&#x2F;body&gt;</span><br><span class="line">&lt;&#x2F;html&gt;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>在web.xml中注册Servlet</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version&#x3D;&quot;1.0&quot; encoding&#x3D;&quot;UTF-8&quot;?&gt;</span><br><span class="line">&lt;web-app xmlns&#x3D;&quot;http:&#x2F;&#x2F;xmlns.jcp.org&#x2F;xml&#x2F;ns&#x2F;javaee&quot;</span><br><span class="line">        xmlns:xsi&#x3D;&quot;http:&#x2F;&#x2F;www.w3.org&#x2F;2001&#x2F;XMLSchema-instance&quot;</span><br><span class="line">        xsi:schemaLocation&#x3D;&quot;http:&#x2F;&#x2F;xmlns.jcp.org&#x2F;xml&#x2F;ns&#x2F;javaee http:&#x2F;&#x2F;xmlns.jcp.org&#x2F;xml&#x2F;ns&#x2F;javaee&#x2F;web-app_4_0.xsd&quot;</span><br><span class="line">        version&#x3D;&quot;4.0&quot;&gt;</span><br><span class="line">   &lt;servlet&gt;</span><br><span class="line">       &lt;servlet-name&gt;HelloServlet&lt;&#x2F;servlet-name&gt;</span><br><span class="line">       &lt;servlet-class&gt;com.kuang.servlet.HelloServlet&lt;&#x2F;servlet-class&gt;</span><br><span class="line">   &lt;&#x2F;servlet&gt;</span><br><span class="line">   &lt;servlet-mapping&gt;</span><br><span class="line">       &lt;servlet-name&gt;HelloServlet&lt;&#x2F;servlet-name&gt;</span><br><span class="line">       &lt;url-pattern&gt;&#x2F;user&lt;&#x2F;url-pattern&gt;</span><br><span class="line">   &lt;&#x2F;servlet-mapping&gt;</span><br><span class="line"></span><br><span class="line">&lt;&#x2F;web-app&gt;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>配置Tomcat，并启动测试</p>
-</li>
-<li><ul>
-<li>localhost:8080/user?method=add</li>
-<li>localhost:8080/user?method=delete</li>
-</ul>
-</li>
-</ol>
-<p><strong>MVC框架要做哪些事情</strong></p>
-<ol>
-<li>将url映射到java类或java类的方法 .</li>
-<li>封装用户提交的数据 .</li>
-<li>处理请求–调用相关的业务处理–封装响应数据 .</li>
-<li>将响应的数据进行渲染 . jsp / html 等表示层数据 .</li>
-</ol>
-<p><strong>说明：</strong></p>
-<p>​    常见的服务器端MVC框架有：Struts、Spring MVC、ASP.NET MVC、Zend Framework、JSF；常见前端MVC框架：vue、angularjs、react、backbone；由MVC演化出了另外一些模式如：MVP、MVVM 等等….</p>
-<h2 id="2、什么是SpringMVC"><a href="#2、什么是SpringMVC" class="headerlink" title="2、什么是SpringMVC"></a>2、什么是SpringMVC</h2><h3 id="2-1、概述"><a href="#2-1、概述" class="headerlink" title="2.1、概述"></a>2.1、概述</h3><p>Spring MVC是Spring Framework的一部分，是基于Java实现MVC的轻量级Web框架。</p>
-<p>查看官方文档：<a href="https://docs.spring.io/spring/docs/5.2.0.RELEASE/spring-framework-reference/web.html#spring-web" target="_blank" rel="noopener">https://docs.spring.io/spring/docs/5.2.0.RELEASE/spring-framework-reference/web.html#spring-web</a></p>
-<p><strong>我们为什么要学习SpringMVC呢?</strong></p>
-<p> Spring MVC的特点：</p>
-<ol>
-<li>轻量级，简单易学</li>
-<li>高效 , 基于请求响应的MVC框架</li>
-<li>与Spring兼容性好，无缝结合</li>
-<li>约定优于配置</li>
-<li>功能强大：RESTful、数据验证、格式化、本地化、主题等</li>
-<li>简洁灵活</li>
-</ol>
-<p>Spring的web框架围绕<strong>DispatcherServlet</strong> [ 调度Servlet ] 设计。</p>
-<p>DispatcherServlet的作用是将请求分发到不同的处理器。从Spring 2.5开始，使用Java 5或者以上版本的用户可以采用基于注解形式进行开发，十分简洁；</p>
-<p>正因为SpringMVC好 , 简单 , 便捷 , 易学 , 天生和Spring无缝集成(使用SpringIoC和Aop) , 使用约定优于配置 . 能够进行简单的junit测试 . 支持Restful风格 .异常处理 , 本地化 , 国际化 , 数据验证 , 类型转换 , 拦截器 等等……所以我们要学习 .</p>
-<p><strong>最重要的一点还是用的人多 , 使用的公司多 .</strong> </p>
-<h3 id="2-2、中心控制器"><a href="#2-2、中心控制器" class="headerlink" title="2.2、中心控制器"></a>2.2、中心控制器</h3><p>​    Spring的web框架围绕DispatcherServlet设计。DispatcherServlet的作用是将请求分发到不同的处理器。从Spring 2.5开始，使用Java 5或者以上版本的用户可以采用基于注解的controller声明方式。</p>
-<p>​    Spring MVC框架像许多其他MVC框架一样, <strong>以请求为驱动</strong> , <strong>围绕一个中心Servlet分派请求及提供其他功能</strong>，<strong>DispatcherServlet是一个实际的Servlet (它继承自HttpServlet 基类)</strong>。</p>
-<p>SpringMVC的原理如下图所示：<img src="D:%5Cblog%5Csource_posts%5Cimg%5C4.png" alt="4"></p>
-<p>​    当发起请求时被前置的控制器拦截到请求，根据请求参数生成代理请求，找到请求对应的实际控制器，控制器处理请求，创建数据模型，访问数据库，将模型响应给中心控制器，控制器使用模型与视图渲染视图结果，将结果返回给中心控制器，再将结果返回给请求者。</p>
-<h3 id="2-3、SpringMVC执行原理"><a href="#2-3、SpringMVC执行原理" class="headerlink" title="2.3、SpringMVC执行原理"></a>2.3、SpringMVC执行原理</h3><p>pringMVC的一个较完整的流程图，实线表示SpringMVC框架提供的技术，不需要开发者实现，虚线表示需要开发者实现。</p>
-<p><strong>简要分析执行流程</strong></p>
-<ol>
-<li><p>DispatcherServlet表示前置控制器，是整个SpringMVC的控制中心。用户发出请求，DispatcherServlet接收请求并拦截请求。</p>
-<p>我们假设请求的url为 : <a href="http://localhost:8080/SpringMVC/hello" target="_blank" rel="noopener">http://localhost:8080/SpringMVC/hello</a></p>
-</li>
-</ol>
-<p>   <strong>如上url拆分成三部分：</strong></p>
-<p>   <a href="http://localhost:8080服务器域名">http://localhost:8080服务器域名</a></p>
-<p>   SpringMVC部署在服务器上的web站点</p>
-<p>   hello表示控制器</p>
-<p>   通过分析，如上url表示为：请求位于服务器localhost:8080上的SpringMVC站点的hello控制器。</p>
-<ol start="2">
-<li><p>HandlerMapping为处理器映射。DispatcherServlet调用HandlerMapping,HandlerMapping根据请求url查找Handler。</p>
-</li>
-<li><p>HandlerExecution表示具体的Handler,其主要作用是根据url查找控制器，如上url被查找控制器为：hello。</p>
-</li>
-<li><p>HandlerExecution将解析后的信息传递给DispatcherServlet,如解析控制器映射等。</p>
-</li>
-<li><p>HandlerAdapter表示处理器适配器，其按照特定的规则去执行Handler。</p>
-</li>
-<li><p>Handler让具体的Controller执行。</p>
-</li>
-<li><p>Controller将具体的执行信息返回给HandlerAdapter,如ModelAndView。</p>
-</li>
-<li><p>HandlerAdapter将视图逻辑名或模型传递给DispatcherServlet。</p>
-</li>
-<li><p>DispatcherServlet调用视图解析器(ViewResolver)来解析HandlerAdapter传递的逻辑视图名。</p>
-</li>
-<li><p>视图解析器将解析的逻辑视图名传给DispatcherServlet。</p>
-</li>
-<li><p>DispatcherServlet根据视图解析器解析的视图结果，调用具体的视图。</p>
-</li>
-<li><p>最终视图呈现给用户。</p>
-</li>
-</ol>
-<p>在这里先听一遍原理，不理解没有关系，我们马上来写一个对应的代码实现大家就明白了，如果不明白，那就写10遍，没有笨人，只有懒人！</p>
-<p>狂神java视频地址</p>
-<p><a href="https://www.bilibili.com/video/BV1aE41167Tu" target="_blank" rel="noopener">https://www.bilibili.com/video/BV1aE41167Tu</a></p>
-
+        <h2 id="预计四月十二修改"><a href="#预计四月十二修改" class="headerlink" title="预计四月十二修改"></a>预计四月十二修改</h2>
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2020/04/10/SringMVC/" data-id="ck8tuekat0001nou98mrvfi3o" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2020/04/10/SringMVC/" data-id="ck8tw7ql20001m4u9erb1dua4" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/SpringMVC/" rel="tag">SpringMVC</a></li></ul>
@@ -266,147 +130,65 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <blockquote>
-<p>环境说明：</p>
-</blockquote>
-<ul>
-<li>jdk 8 +</li>
+        <h1 id="Mybatis"><a href="#Mybatis" class="headerlink" title="Mybatis"></a>Mybatis</h1><h5 id="环境说明"><a href="#环境说明" class="headerlink" title="环境说明"></a>环境说明</h5><ul>
+<li>jdk 8+</li>
 <li>MySQL 5.7.19</li>
-<li>maven-3.6.1</li>
-<li>IDEA</li>
+<li>maven-3.5.2</li>
+<li>IDEA 2018.3.6</li>
 </ul>
-<p>学习前需要掌握：</p>
-<ul>
-<li>JDBC</li>
-<li>MySQL</li>
-<li>Java 基础</li>
-<li>Maven</li>
-<li>Junit</li>
-</ul>
-<blockquote>
-<p>什么是MyBatis</p>
-</blockquote>
-<ul>
-<li>MyBatis 是一款优秀的<strong>持久层框架</strong></li>
-<li>MyBatis 避免了几乎所有的 JDBC 代码和手动设置参数以及获取结果集的过程</li>
-<li>MyBatis 可以使用简单的 XML 或注解来配置和映射原生信息，将接口和 Java 的 实体类 【Plain Old Java Objects,普通的 Java对象】映射成数据库中的记录。</li>
-<li>MyBatis 本是apache的一个开源项目ibatis, 2010年这个项目由apache 迁移到了google code，并且改名为MyBatis 。</li>
-<li>2013年11月迁移到<strong>Github</strong> .</li>
-<li>Mybatis官方文档 : <a href="http://www.mybatis.org/mybatis-3/zh/index.html" target="_blank" rel="noopener">http://www.mybatis.org/mybatis-3/zh/index.html</a></li>
-<li>GitHub : <a href="https://github.com/mybatis/mybatis-3" target="_blank" rel="noopener">https://github.com/mybatis/mybatis-3</a></li>
-</ul>
-<blockquote>
-<p>持久化</p>
-</blockquote>
-<p><strong>持久化是将程序数据在持久状态和瞬时状态间转换的机制。</strong></p>
-<ul>
-<li>即把数据（如内存中的对象）保存到可永久保存的存储设备中（如磁盘）。持久化的主要应用是将内存中的对象存储在数据库中，或者存储在磁盘文件中、XML数据文件中等等。</li>
-<li>JDBC就是一种持久化机制。文件IO也是一种持久化机制。</li>
-<li>在生活中 : 将鲜肉冷藏，吃的时候再解冻的方法也是。将水果做成罐头的方法也是。</li>
-</ul>
-<p><strong>为什么需要持久化服务呢？那是由于内存本身的缺陷引起的</strong></p>
-<ul>
-<li>内存断电后数据会丢失，但有一些对象是无论如何都不能丢失的，比如银行账号等，遗憾的是，人们还无法保证内存永不掉电。</li>
-<li>内存过于昂贵，与硬盘、光盘等外存相比，内存的价格要高2~3个数量级，而且维持成本也高，至少需要一直供电吧。所以即使对象不需要永久保存，也会因为内存的容量限制不能一直呆在内存中，需要持久化来缓存到外存。</li>
-</ul>
-<blockquote>
-<p>持久层</p>
-</blockquote>
-<p><strong>什么是持久层？</strong></p>
-<ul>
-<li>完成持久化工作的代码块 .  —-&gt;  dao层 【DAO (Data Access Object)  数据访问对象】</li>
-<li>大多数情况下特别是企业级应用，数据持久化往往也就意味着将内存中的数据保存到磁盘上加以固化，而持久化的实现过程则大多通过各种<strong>关系数据库</strong>来完成。</li>
-<li>不过这里有一个字需要特别强调，也就是所谓的“层”。对于应用系统而言，数据持久功能大多是必不可少的组成部分。也就是说，我们的系统中，已经天然的具备了“持久层”概念？也许是，但也许实际情况并非如此。之所以要独立出一个“持久层”的概念,而不是“持久模块”，“持久单元”，也就意味着，我们的系统架构中，应该有一个相对独立的逻辑层面，专注于数据持久化逻辑的实现.</li>
-<li>与系统其他部分相对而言，这个层面应该具有一个较为清晰和严格的逻辑边界。【说白了就是用来操作数据库存在的！】</li>
-</ul>
-<blockquote>
-<p>为什么需要Mybatis</p>
-</blockquote>
-<ul>
-<li><p>Mybatis就是帮助程序猿将数据存入数据库中 , 和从数据库中取数据 .</p>
+<h5 id="什么是MyBatis"><a href="#什么是MyBatis" class="headerlink" title="什么是MyBatis"></a>什么是MyBatis</h5><ul>
+<li><p>MyBatis 是一款优秀的<strong>持久层框架</strong></p>
 </li>
-<li><p>传统的jdbc操作 , 有很多重复代码块 .比如 : 数据取出时的封装 , 数据库的建立连接等等… , 通过框架可以减少重复代码,提高开发效率 .</p>
+<li><p>MyBatis 避免了几乎所有的 JDBC 代码和手动设置参数以及获取结果集的过程</p>
 </li>
-<li><p>MyBatis 是一个半自动化的<strong>ORM框架 (Object Relationship Mapping) –&gt;对象关系映射</strong></p>
+<li><p>MyBatis 可以使用简单的 XML 或注解来配置和映射原生信息，将接口和 Java 的 实体类 【Plain Old Java Objects,普通的 Java对象】映射成数据库中的记录。</p>
 </li>
-<li><p>所有的事情，不用Mybatis依旧可以做到，只是用了它，所有实现会更加简单！<strong>技术没有高低之分，只有使用这个技术的人有高低之别</strong></p>
+<li><p>MyBatis 本是apache的一个开源项目ibatis, 2010年这个项目由apache 迁移到了google code，并且改名为MyBatis 。</p>
 </li>
-<li><p>MyBatis的优点</p>
+<li><p>2013年11月迁移到<strong>Github</strong> .</p>
 </li>
-<li><ul>
-<li>简单易学：本身就很小且简单。没有任何第三方依赖，最简单安装只要两个jar文件+配置几个sql映射文件就可以了，易于学习，易于使用，通过文档和源代码，可以比较完全的掌握它的设计思路和实现。</li>
-<li>灵活：mybatis不会对应用程序或者数据库的现有设计强加任何影响。sql写在xml里，便于统一管理和优化。通过sql语句可以满足操作数据库的所有需求。</li>
-<li>解除sql与程序代码的耦合：通过提供DAO层，将业务逻辑和数据访问逻辑分离，使系统的设计更清晰，更易维护，更易单元测试。sql和代码的分离，提高了可维护性。</li>
-<li>提供xml标签，支持编写动态sql。</li>
-<li>…….</li>
-</ul>
+<li><p>Mybatis官方文档 : <a href="http://www.mybatis.org/mybatis-3/zh/index.html" target="_blank" rel="noopener">http://www.mybatis.org/mybatis-3/zh/index.html</a></p>
 </li>
-<li><p>最重要的一点，使用的人多！公司需要！</p>
+<li><p>GitHub : <a href="https://github.com/mybatis/mybatis-3" target="_blank" rel="noopener">https://github.com/mybatis/mybatis-3</a></p>
+<hr>
 </li>
 </ul>
-<p>MyBatis第一个程序</p>
-<p><strong>思路流程：搭建环境–&gt;导入Mybatis—&gt;编写代码—&gt;测试</strong></p>
-<blockquote>
-<p>代码演示</p>
-</blockquote>
-<p>1、搭建实验数据库</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">CREATE DATABASE &#96;mybatis&#96;;</span><br><span class="line"></span><br><span class="line">USE &#96;mybatis&#96;;</span><br><span class="line"></span><br><span class="line">DROP TABLE IF EXISTS &#96;user&#96;;</span><br><span class="line"></span><br><span class="line">CREATE TABLE &#96;user&#96; (</span><br><span class="line">&#96;id&#96; int(20) NOT NULL,</span><br><span class="line">&#96;name&#96; varchar(30) DEFAULT NULL,</span><br><span class="line">&#96;pwd&#96; varchar(30) DEFAULT NULL,</span><br><span class="line">PRIMARY KEY (&#96;id&#96;)</span><br><span class="line">) ENGINE&#x3D;InnoDB DEFAULT CHARSET&#x3D;utf8;</span><br><span class="line"></span><br><span class="line">insert  into &#96;user&#96;(&#96;id&#96;,&#96;name&#96;,&#96;pwd&#96;) values (1,&#39;狂神&#39;,&#39;123456&#39;),(2,&#39;张三&#39;,&#39;abcdef&#39;),(3,&#39;李四&#39;,&#39;987654&#39;);</span><br></pre></td></tr></table></figure>
+<h4 id="Mybatis-入门程序"><a href="#Mybatis-入门程序" class="headerlink" title="Mybatis  入门程序"></a>Mybatis  入门程序</h4><p>  导入依赖</p>
+  <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.mybatis<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>mybatis<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>3.5.2<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>mysql<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>mysql-connector-java<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>5.1.6<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
 
-<p>2、导入MyBatis相关 jar 包</p>
 <ul>
-<li>GitHub上找</li>
+<li>主配置文件</li>
 </ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&lt;dependency&gt;</span><br><span class="line">   &lt;groupId&gt;org.mybatis&lt;&#x2F;groupId&gt;</span><br><span class="line">   &lt;artifactId&gt;mybatis&lt;&#x2F;artifactId&gt;</span><br><span class="line">   &lt;version&gt;3.5.2&lt;&#x2F;version&gt;</span><br><span class="line">&lt;&#x2F;dependency&gt;</span><br><span class="line">&lt;dependency&gt;</span><br><span class="line">   &lt;groupId&gt;mysql&lt;&#x2F;groupId&gt;</span><br><span class="line">   &lt;artifactId&gt;mysql-connector-java&lt;&#x2F;artifactId&gt;</span><br><span class="line">   &lt;version&gt;5.1.47&lt;&#x2F;version&gt;</span><br><span class="line">&lt;&#x2F;dependency&gt;</span><br></pre></td></tr></table></figure>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version="1.0" encoding="UTF-8" ?&gt;</span></span><br><span class="line"><span class="meta">&lt;!DOCTYPE <span class="meta-keyword">configuration</span></span></span><br><span class="line"><span class="meta">        <span class="meta-keyword">PUBLIC</span> <span class="meta-string">"-//mybatis.org//DTD Config 3.0//EN"</span></span></span><br><span class="line"><span class="meta">        <span class="meta-string">"http://mybatis.org/dtd/mybatis-3-config.dtd"</span>&gt;</span></span><br><span class="line"><span class="comment">&lt;!--mybatis主配置文件--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">configuration</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!--配置环境--&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">environments</span> <span class="attr">default</span>=<span class="string">"mysql"</span>&gt;</span></span><br><span class="line">        <span class="comment">&lt;!--配置mysql的环境--&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">environment</span> <span class="attr">id</span>=<span class="string">"mysql"</span>&gt;</span></span><br><span class="line">            <span class="comment">&lt;!--配置事务的类型--&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">transactionManager</span> <span class="attr">type</span>=<span class="string">"JDBC"</span>&gt;</span><span class="tag">&lt;/<span class="name">transactionManager</span>&gt;</span></span><br><span class="line">            <span class="comment">&lt;!--配置数据源（连接池）--&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">dataSource</span> <span class="attr">type</span>=<span class="string">"POOLED"</span>&gt;</span></span><br><span class="line">                <span class="comment">&lt;!--配置连接数据库的4个基本信息--&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"driver"</span> <span class="attr">value</span>=<span class="string">"com.mysql.jdbc.Driver"</span>&gt;</span><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"url"</span> <span class="attr">value</span>=<span class="string">"jdbc:mysql://localhost:3306/mybatis?characterEncoding=UTF8"</span>&gt;</span><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"username"</span> <span class="attr">value</span>=<span class="string">"root"</span>&gt;</span><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"password"</span> <span class="attr">value</span>=<span class="string">"root"</span>&gt;</span><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">dataSource</span>&gt;</span></span><br><span class="line"></span><br><span class="line">        <span class="tag">&lt;/<span class="name">environment</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">environments</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">&lt;!--指定映射配置文件的位置，映射配置文件指的是每个dao独立的配置文件--&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">mappers</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">mapper</span> <span class="attr">resource</span>=<span class="string">"com/dzu/dao/IUserDao.xml"</span>&gt;</span><span class="tag">&lt;/<span class="name">mapper</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">mappers</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">configuration</span>&gt;</span></span><br></pre></td></tr></table></figure>
 
-<p>3、编写MyBatis核心配置文件</p>
 <ul>
-<li>查看帮助文档</li>
+<li><p>Dao层接口方法对应的xml配置文件</p>
+</li>
+<li><pre><code class="xml"><span class="meta">&lt;?xml version="1.0" encoding="UTF-8" ?&gt;</span>
+<span class="meta">&lt;!DOCTYPE <span class="meta-keyword">mapper</span></span>
+<span class="meta">        <span class="meta-keyword">PUBLIC</span> <span class="meta-string">"-//mybatis.org//DTD Mapper 3.0//EN"</span></span>
+<span class="meta">        <span class="meta-string">"http://mybatis.org/dtd/mybatis-3-mapper.dtd"</span>&gt;</span>
+<span class="tag">&lt;<span class="name">mapper</span> <span class="attr">namespace</span>=<span class="string">"com.dzu.dao.IUserDao"</span>&gt;</span>
+    <span class="comment">&lt;!--配置查询所有 id是IUserDao里面的方法名称--&gt;</span>
+    <span class="comment">&lt;!--mybatis的映射配置文件位置必须和dao接口的包结构相同</span>
+<span class="comment">        映射配置文件的mapper标签namespace属性的取值必须是dao接口的全限定类名</span>
+<span class="comment">        映射配置文件的操作配置（select） id 属性的取值必须是dao接口的方法名</span>
+<span class="comment">        无需再写dao的实现类</span>
+<span class="comment">    --&gt;</span>
+    <span class="tag">&lt;<span class="name">select</span> <span class="attr">id</span>=<span class="string">"findAll"</span> <span class="attr">resultType</span>=<span class="string">"com.dzu.domain.User"</span>&gt;</span>
+        select * from user
+    <span class="tag">&lt;/<span class="name">select</span>&gt;</span>
+<span class="tag">&lt;/<span class="name">mapper</span>&gt;</span>
+<span class="comment"><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">- 测试类</span><br><span class="line"></span><br><span class="line">- &#96;&#96;&#96;java</span><br><span class="line">  public class MybatisTest &#123;</span><br><span class="line">      public static void main(String[] args) throws IOException &#123;</span><br><span class="line">          &#x2F;&#x2F;1.读取配置文件</span><br><span class="line">          InputStream in &#x3D; Resources.getResourceAsStream(&quot;SqlMapConfig.xml&quot;);</span><br><span class="line">          &#x2F;&#x2F;2.创建SqlSessionFactory工厂</span><br><span class="line">          SqlSessionFactoryBuilder builder &#x3D; new SqlSessionFactoryBuilder();</span><br><span class="line">          SqlSessionFactory factory &#x3D; builder.build(in);</span><br><span class="line">          &#x2F;&#x2F;3.使用工厂生产一个SqlSession对象</span><br><span class="line">          SqlSession session &#x3D; factory.openSession();</span><br><span class="line">          &#x2F;&#x2F;4.使用SqlSession创建Dao接口的代理对象</span><br><span class="line">          IUserDao userDao &#x3D; session.getMapper(IUserDao.class);</span><br><span class="line">          &#x2F;&#x2F;5，使用代理对象执行方法</span><br><span class="line">          List&lt;User&gt; users &#x3D;  userDao.findAll();</span><br><span class="line">          for (User user : users)</span><br><span class="line">              System.out.println(user);</span><br><span class="line">          &#x2F;&#x2F;6.释放资源</span><br><span class="line">          session.close();</span><br><span class="line">          in.close();</span><br><span class="line">      &#125;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure></span>
+</code></pre>
+</li>
 </ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version&#x3D;&quot;1.0&quot; encoding&#x3D;&quot;UTF-8&quot; ?&gt;</span><br><span class="line">&lt;!DOCTYPE configuration</span><br><span class="line">       PUBLIC &quot;-&#x2F;&#x2F;mybatis.org&#x2F;&#x2F;DTD Config 3.0&#x2F;&#x2F;EN&quot;</span><br><span class="line">       &quot;http:&#x2F;&#x2F;mybatis.org&#x2F;dtd&#x2F;mybatis-3-config.dtd&quot;&gt;</span><br><span class="line">&lt;configuration&gt;</span><br><span class="line">   &lt;environments default&#x3D;&quot;development&quot;&gt;</span><br><span class="line">       &lt;environment id&#x3D;&quot;development&quot;&gt;</span><br><span class="line">           &lt;transactionManager type&#x3D;&quot;JDBC&quot;&#x2F;&gt;</span><br><span class="line">           &lt;dataSource type&#x3D;&quot;POOLED&quot;&gt;</span><br><span class="line">               &lt;property name&#x3D;&quot;driver&quot; value&#x3D;&quot;com.mysql.jdbc.Driver&quot;&#x2F;&gt;</span><br><span class="line">               &lt;property name&#x3D;&quot;url&quot; value&#x3D;&quot;jdbc:mysql:&#x2F;&#x2F;localhost:3306&#x2F;mybatis?useSSL&#x3D;true&amp;useUnicode&#x3D;true&amp;characterEncoding&#x3D;utf8&quot;&#x2F;&gt;</span><br><span class="line">               &lt;property name&#x3D;&quot;username&quot; value&#x3D;&quot;root&quot;&#x2F;&gt;</span><br><span class="line">               &lt;property name&#x3D;&quot;password&quot; value&#x3D;&quot;123456&quot;&#x2F;&gt;</span><br><span class="line">           &lt;&#x2F;dataSource&gt;</span><br><span class="line">       &lt;&#x2F;environment&gt;</span><br><span class="line">   &lt;&#x2F;environments&gt;</span><br><span class="line">   &lt;mappers&gt;</span><br><span class="line">       &lt;mapper resource&#x3D;&quot;com&#x2F;kuang&#x2F;dao&#x2F;userMapper.xml&quot;&#x2F;&gt;</span><br><span class="line">   &lt;&#x2F;mappers&gt;</span><br><span class="line">&lt;&#x2F;configuration&gt;</span><br></pre></td></tr></table></figure>
-
-<p>4、编写MyBatis工具类</p>
-<ul>
-<li>查看帮助文档</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">import org.apache.ibatis.io.Resources;</span><br><span class="line">import org.apache.ibatis.session.SqlSession;</span><br><span class="line">import org.apache.ibatis.session.SqlSessionFactory;</span><br><span class="line">import org.apache.ibatis.session.SqlSessionFactoryBuilder;</span><br><span class="line">import java.io.IOException;</span><br><span class="line">import java.io.InputStream;</span><br><span class="line"></span><br><span class="line">public class MybatisUtils &#123;</span><br><span class="line"></span><br><span class="line">   private static SqlSessionFactory sqlSessionFactory;</span><br><span class="line"></span><br><span class="line">   static &#123;</span><br><span class="line">       try &#123;</span><br><span class="line">           String resource &#x3D; &quot;mybatis-config.xml&quot;;</span><br><span class="line">           InputStream inputStream &#x3D; Resources.getResourceAsStream(resource);</span><br><span class="line">           sqlSessionFactory &#x3D; new SqlSessionFactoryBuilder().build(inputStream);</span><br><span class="line">      &#125; catch (IOException e) &#123;</span><br><span class="line">           e.printStackTrace();</span><br><span class="line">      &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">   &#x2F;&#x2F;获取SqlSession连接</span><br><span class="line">   public static SqlSession getSession()&#123;</span><br><span class="line">       return sqlSessionFactory.openSession();</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>5、创建实体类</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">public class User &#123;</span><br><span class="line">   </span><br><span class="line">   private int id;  &#x2F;&#x2F;id</span><br><span class="line">   private String name;   &#x2F;&#x2F;姓名</span><br><span class="line">   private String pwd;   &#x2F;&#x2F;密码</span><br><span class="line">   </span><br><span class="line">   &#x2F;&#x2F;构造,有参,无参</span><br><span class="line">   &#x2F;&#x2F;set&#x2F;get</span><br><span class="line">   &#x2F;&#x2F;toString()</span><br><span class="line">   </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>6、编写Mapper接口类</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">import com.kuang.pojo.User;</span><br><span class="line">import java.util.List;</span><br><span class="line"></span><br><span class="line">public interface UserMapper &#123;</span><br><span class="line">   List&lt;User&gt; selectUser();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>7、编写Mapper.xml配置文件</p>
-<ul>
-<li>namespace 十分重要，不能写错！</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version&#x3D;&quot;1.0&quot; encoding&#x3D;&quot;UTF-8&quot; ?&gt;</span><br><span class="line">&lt;!DOCTYPE mapper</span><br><span class="line">       PUBLIC &quot;-&#x2F;&#x2F;mybatis.org&#x2F;&#x2F;DTD Mapper 3.0&#x2F;&#x2F;EN&quot;</span><br><span class="line">       &quot;http:&#x2F;&#x2F;mybatis.org&#x2F;dtd&#x2F;mybatis-3-mapper.dtd&quot;&gt;</span><br><span class="line">&lt;mapper namespace&#x3D;&quot;com.kuang.dao.UserMapper&quot;&gt;</span><br><span class="line"> &lt;select id&#x3D;&quot;selectUser&quot; resultType&#x3D;&quot;com.kuang.pojo.User&quot;&gt;</span><br><span class="line">  select * from user</span><br><span class="line"> &lt;&#x2F;select&gt;</span><br><span class="line">&lt;&#x2F;mapper&gt;</span><br></pre></td></tr></table></figure>
-
-<p>8、编写测试类</p>
-<ul>
-<li>Junit 包测试</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">public class MyTest &#123;</span><br><span class="line">   @Test</span><br><span class="line">   public void selectUser() &#123;</span><br><span class="line">       SqlSession session &#x3D; MybatisUtils.getSession();</span><br><span class="line">       &#x2F;&#x2F;方法一:</span><br><span class="line">       &#x2F;&#x2F;List&lt;User&gt; users &#x3D; session.selectList(&quot;com.kuang.mapper.UserMapper.selectUser&quot;);</span><br><span class="line">       &#x2F;&#x2F;方法二:</span><br><span class="line">       UserMapper mapper &#x3D; session.getMapper(UserMapper.class);</span><br><span class="line">       List&lt;User&gt; users &#x3D; mapper.selectUser();</span><br><span class="line"></span><br><span class="line">       for (User user: users)&#123;</span><br><span class="line">           System.out.println(user);</span><br><span class="line">      &#125;</span><br><span class="line">       session.close();</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>9、运行测试，成功的查询出来的我们的数据，ok！</p>
-<blockquote>
-<p>问题说明</p>
-</blockquote>
-<p><strong>可能出现问题说明：Maven静态资源过滤问题</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">&lt;resources&gt;</span><br><span class="line">   &lt;resource&gt;</span><br><span class="line">       &lt;directory&gt;src&#x2F;main&#x2F;java&lt;&#x2F;directory&gt;</span><br><span class="line">       &lt;includes&gt;</span><br><span class="line">           &lt;include&gt;**&#x2F;*.properties&lt;&#x2F;include&gt;</span><br><span class="line">           &lt;include&gt;**&#x2F;*.xml&lt;&#x2F;include&gt;</span><br><span class="line">       &lt;&#x2F;includes&gt;</span><br><span class="line">       &lt;filtering&gt;false&lt;&#x2F;filtering&gt;</span><br><span class="line">   &lt;&#x2F;resource&gt;</span><br><span class="line">   &lt;resource&gt;</span><br><span class="line">       &lt;directory&gt;src&#x2F;main&#x2F;resources&lt;&#x2F;directory&gt;</span><br><span class="line">       &lt;includes&gt;</span><br><span class="line">           &lt;include&gt;**&#x2F;*.properties&lt;&#x2F;include&gt;</span><br><span class="line">           &lt;include&gt;**&#x2F;*.xml&lt;&#x2F;include&gt;</span><br><span class="line">       &lt;&#x2F;includes&gt;</span><br><span class="line">       &lt;filtering&gt;false&lt;&#x2F;filtering&gt;</span><br><span class="line">   &lt;&#x2F;resource&gt;</span><br><span class="line">&lt;&#x2F;resources&gt;</span><br></pre></td></tr></table></figure>
-
-
-
-
-
-<p>有了MyBatis以后再也不用写原生的JDBC代码了，舒服！</p>
-<p>狂神mybatis视频地址</p>
-<p><a href="https://www.bilibili.com/video/BV1NE411Q7Nx" target="_blank" rel="noopener">https://www.bilibili.com/video/BV1NE411Q7Nx</a></p>
+<p>b站视频地址：<a href="https://www.bilibili.com/video/BV1NE411Q7Nx" target="_blank" rel="noopener">https://www.bilibili.com/video/BV1NE411Q7Nx</a></p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2020/04/10/Mybatis/" data-id="ck8tuekax0003nou911bafmdx" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2020/04/10/Mybatis/" data-id="ck8tw7qkw0000m4u9chtiakuw" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MyBatis/" rel="tag">MyBatis</a></li></ul>
@@ -432,7 +214,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2020/04/10/%E6%88%91%E7%9A%84%E7%AC%AC%E4%B8%80%E7%AF%87%E5%8D%9A%E5%AE%A2%E6%96%87%E7%AB%A0/">我的第一篇博客文章</a>
+      <a class="article-title" href="/2020/04/10/%E6%88%91%E7%9A%84%E7%AC%AC%E4%B8%80%E7%AF%87%E5%8D%9A%E5%AE%A2%E6%96%87%E7%AB%A0/">如何搭建Hexo简单教程</a>
     </h1>
   
 
@@ -469,7 +251,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2020/04/10/%E6%88%91%E7%9A%84%E7%AC%AC%E4%B8%80%E7%AF%87%E5%8D%9A%E5%AE%A2%E6%96%87%E7%AB%A0/" data-id="ck8tuekam0000nou9fuc062ov" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2020/04/10/%E6%88%91%E7%9A%84%E7%AC%AC%E4%B8%80%E7%AF%87%E5%8D%9A%E5%AE%A2%E6%96%87%E7%AB%A0/" data-id="ck8tw7ql70004m4u96js4euk9" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Hexo/" rel="tag">Hexo</a></li></ul>
@@ -520,7 +302,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2020/04/10/hello-world/" data-id="ck8tuekaz0004nou92jsfdm2x" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2020/04/10/hello-world/" data-id="ck8tw7ql50003m4u9b21m2ph6" class="article-share-link">Share</a>
       
       
     </footer>
@@ -583,7 +365,7 @@
           </li>
         
           <li>
-            <a href="/2020/04/10/%E6%88%91%E7%9A%84%E7%AC%AC%E4%B8%80%E7%AF%87%E5%8D%9A%E5%AE%A2%E6%96%87%E7%AB%A0/">我的第一篇博客文章</a>
+            <a href="/2020/04/10/%E6%88%91%E7%9A%84%E7%AC%AC%E4%B8%80%E7%AF%87%E5%8D%9A%E5%AE%A2%E6%96%87%E7%AB%A0/">如何搭建Hexo简单教程</a>
           </li>
         
           <li>
