@@ -86,12 +86,29 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>##第一章</p>
-<p>内容</p>
-<p>———</p>
-<p>##第二章</p>
-<p>内容</p>
-<p>————</p>
+        <p>##如何搭建Hexo</p>
+<ol>
+<li><p>安装nods.js</p>
+</li>
+<li><p>进入cmd，npm外网太慢，用taobao<br>npm install -g cnpm –registry=<a href="https://registry.npm.taobao.org" target="_blank" rel="noopener">https://registry.npm.taobao.org</a></p>
+</li>
+<li><p>安装hexo<br>cnpm install -g hexo-cli</p>
+</li>
+<li><p>初始化hexo<br>hexo init</p>
+</li>
+<li><p>启动<br>hexo s</p>
+</li>
+<li><p>创建新的博客</p>
+<p>hexo n</p>
+</li>
+</ol>
+<p>##将hexo发布到github</p>
+<ol>
+<li>安装 git<br>cnpm install –save hexo-deployer-git</li>
+<li>修改_config.yml文件<br>  type:  git<br>  repo:  <a href="https://github.com/zd1181803971/zd1181803971.github.io.git" target="_blank" rel="noopener">https://github.com/zd1181803971/zd1181803971.github.io.git</a><br>  branch:  master</li>
+<li>部署<br>hexo d</li>
+<li>重新生成 发布<br>   hexo g<br>   hexo s</li>
+</ol>
 <p>##参考文献</p>
 
       
