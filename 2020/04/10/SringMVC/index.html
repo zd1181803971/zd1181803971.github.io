@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>SringMVC | ZhaoDong&#39;s Blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="1、回顾MVC 1.1、什么是MVC MVC是模型(Model)、视图(View)、控制器(Controller)的简写，是一种软件设计规范。 是将业务逻辑、数据、显示分离的方法来组织代码。 MVC主要作用是降低了视图与业务逻辑间的双向偶合。 MVC不是一种设计模式，MVC是一种架构模式。当然不同的MVC存在差异。  Model（模型）：数据模型，提供要展示的数据，因此包含数据和行为，可以认为是领">
+<meta property="og:type" content="article">
+<meta property="og:title" content="SringMVC">
+<meta property="og:url" content="http://yoursite.com/2020/04/10/SringMVC/index.html">
+<meta property="og:site_name" content="ZhaoDong&#39;s Blog">
+<meta property="og:description" content="1、回顾MVC 1.1、什么是MVC MVC是模型(Model)、视图(View)、控制器(Controller)的简写，是一种软件设计规范。 是将业务逻辑、数据、显示分离的方法来组织代码。 MVC主要作用是降低了视图与业务逻辑间的双向偶合。 MVC不是一种设计模式，MVC是一种架构模式。当然不同的MVC存在差异。  Model（模型）：数据模型，提供要展示的数据，因此包含数据和行为，可以认为是领">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="d:%5Cblog%5Csource_posts%5Cimg%5C4.png">
+<meta property="article:published_time" content="2020-04-10T06:26:48.000Z">
+<meta property="article:modified_time" content="2020-04-10T07:01:51.551Z">
+<meta property="article:author" content="ZhaoDong">
+<meta property="article:tag" content="SpringMVC">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="d:%5Cblog%5Csource_posts%5Cimg%5C4.png">
+  
+    <link rel="alternate" href="/atom.xml" title="ZhaoDong&#39;s Blog" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">ZhaoDong&#39;s Blog</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">java</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="搜索"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-SringMVC" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2020/04/10/SringMVC/" class="article-date">
+  <time datetime="2020-04-10T06:26:48.000Z" itemprop="datePublished">2020-04-10</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      SringMVC
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><strong>1、回顾MVC</strong></p>
+<h3 id="1-1、什么是MVC"><a href="#1-1、什么是MVC" class="headerlink" title="1.1、什么是MVC"></a>1.1、什么是MVC</h3><ul>
+<li>MVC是模型(Model)、视图(View)、控制器(Controller)的简写，是一种软件设计规范。</li>
+<li>是将业务逻辑、数据、显示分离的方法来组织代码。</li>
+<li>MVC主要作用是<strong>降低了视图与业务逻辑间的双向偶合</strong>。</li>
+<li>MVC不是一种设计模式，<strong>MVC是一种架构模式</strong>。当然不同的MVC存在差异。</li>
+</ul>
+<p><strong>Model（模型）：</strong>数据模型，提供要展示的数据，因此包含数据和行为，可以认为是领域模型或JavaBean组件（包含数据和行为），不过现在一般都分离开来：Value Object（数据Dao） 和 服务层（行为Service）。也就是模型提供了模型数据查询和模型数据的状态更新等功能，包括数据和业务。</p>
+<p><strong>View（视图）：</strong>负责进行模型的展示，一般就是我们见到的用户界面，客户想看到的东西。</p>
+<p><strong>Controller（控制器）：</strong>接收用户请求，委托给模型进行处理（状态改变），处理完毕后把返回的模型数据返回给视图，由视图负责展示。也就是说控制器做了个调度员的工作。</p>
+<p><strong>最典型的MVC就是JSP + servlet + javabean的模式。</strong></p>
+<h3 id="1-2、Model1时代"><a href="#1-2、Model1时代" class="headerlink" title="1.2、Model1时代"></a>1.2、Model1时代</h3><ul>
+<li>在web早期的开发中，通常采用的都是Model1。</li>
+<li>Model1中，主要分为两层，视图层和模型层。</li>
+</ul>
+<p>Model1优点：架构简单，比较适合小型项目开发；</p>
+<p>Model1缺点：JSP职责不单一，职责过重，不便于维护；</p>
+<h3 id="1-3、Model2时代"><a href="#1-3、Model2时代" class="headerlink" title="1.3、Model2时代"></a>1.3、Model2时代</h3><p>Model2把一个项目分成三部分，包括<strong>视图、控制、模型。</strong></p>
+<ol>
+<li>用户发请求</li>
+<li>Servlet接收请求数据，并调用对应的业务逻辑方法</li>
+<li>业务处理完毕，返回更新后的数据给servlet</li>
+<li>servlet转向到JSP，由JSP来渲染页面</li>
+<li>响应给前端更新后的页面</li>
+</ol>
+<p><strong>职责分析：</strong></p>
+<p><strong>Controller：控制器</strong></p>
+<ol>
+<li>取得表单数据</li>
+<li>调用业务逻辑</li>
+<li>转向指定的页面</li>
+</ol>
+<p><strong>Model：模型</strong></p>
+<ol>
+<li>业务逻辑</li>
+<li>保存数据的状态</li>
+</ol>
+<p><strong>View：视图</strong></p>
+<ol>
+<li>显示页面</li>
+</ol>
+<p>Model2这样不仅提高的代码的复用率与项目的扩展性，且大大降低了项目的维护成本。Model 1模式的实现比较简单，适用于快速开发小规模项目，Model1中JSP页面身兼View和Controller两种角色，将控制逻辑和表现逻辑混杂在一起，从而导致代码的重用性非常低，增加了应用的扩展性和维护的难度。Model2消除了Model1的缺点。</p>
+<h3 id="1-4、回顾Servlet"><a href="#1-4、回顾Servlet" class="headerlink" title="1.4、回顾Servlet"></a>1.4、回顾Servlet</h3><ol>
+<li><p>新建一个Maven工程当做父工程！pom依赖！</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">&lt;dependencies&gt;</span><br><span class="line">   &lt;dependency&gt;</span><br><span class="line">       &lt;groupId&gt;junit&lt;&#x2F;groupId&gt;</span><br><span class="line">       &lt;artifactId&gt;junit&lt;&#x2F;artifactId&gt;</span><br><span class="line">       &lt;version&gt;4.12&lt;&#x2F;version&gt;</span><br><span class="line">   &lt;&#x2F;dependency&gt;</span><br><span class="line">   &lt;dependency&gt;</span><br><span class="line">       &lt;groupId&gt;org.springframework&lt;&#x2F;groupId&gt;</span><br><span class="line">       &lt;artifactId&gt;spring-webmvc&lt;&#x2F;artifactId&gt;</span><br><span class="line">       &lt;version&gt;5.1.9.RELEASE&lt;&#x2F;version&gt;</span><br><span class="line">   &lt;&#x2F;dependency&gt;</span><br><span class="line">   &lt;dependency&gt;</span><br><span class="line">       &lt;groupId&gt;javax.servlet&lt;&#x2F;groupId&gt;</span><br><span class="line">       &lt;artifactId&gt;servlet-api&lt;&#x2F;artifactId&gt;</span><br><span class="line">       &lt;version&gt;2.5&lt;&#x2F;version&gt;</span><br><span class="line">   &lt;&#x2F;dependency&gt;</span><br><span class="line">   &lt;dependency&gt;</span><br><span class="line">       &lt;groupId&gt;javax.servlet.jsp&lt;&#x2F;groupId&gt;</span><br><span class="line">       &lt;artifactId&gt;jsp-api&lt;&#x2F;artifactId&gt;</span><br><span class="line">       &lt;version&gt;2.2&lt;&#x2F;version&gt;</span><br><span class="line">   &lt;&#x2F;dependency&gt;</span><br><span class="line">   &lt;dependency&gt;</span><br><span class="line">       &lt;groupId&gt;javax.servlet&lt;&#x2F;groupId&gt;</span><br><span class="line">       &lt;artifactId&gt;jstl&lt;&#x2F;artifactId&gt;</span><br><span class="line">       &lt;version&gt;1.2&lt;&#x2F;version&gt;</span><br><span class="line">   &lt;&#x2F;dependency&gt;</span><br><span class="line">&lt;&#x2F;dependencies&gt;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>建立一个Moudle：springmvc-01-servlet ， 添加Web app的支持！</p>
+</li>
+<li><p>导入servlet 和 jsp 的 jar 依赖</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&lt;dependency&gt;</span><br><span class="line">   &lt;groupId&gt;javax.servlet&lt;&#x2F;groupId&gt;</span><br><span class="line">   &lt;artifactId&gt;servlet-api&lt;&#x2F;artifactId&gt;</span><br><span class="line">   &lt;version&gt;2.5&lt;&#x2F;version&gt;</span><br><span class="line">&lt;&#x2F;dependency&gt;</span><br><span class="line">&lt;dependency&gt;</span><br><span class="line">   &lt;groupId&gt;javax.servlet.jsp&lt;&#x2F;groupId&gt;</span><br><span class="line">   &lt;artifactId&gt;jsp-api&lt;&#x2F;artifactId&gt;</span><br><span class="line">   &lt;version&gt;2.2&lt;&#x2F;version&gt;</span><br><span class="line">&lt;&#x2F;dependency&gt;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>编写一个Servlet类，用来处理用户的请求</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">package com.kuang.servlet;</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F;实现Servlet接口</span><br><span class="line">public class HelloServlet extends HttpServlet &#123;</span><br><span class="line">   @Override</span><br><span class="line">   protected void doGet(HttpServletRequest req, HttpServletResponse resp) throwsServletException, IOException &#123;</span><br><span class="line">       &#x2F;&#x2F;取得参数</span><br><span class="line">       String method &#x3D; req.getParameter(&quot;method&quot;);</span><br><span class="line">       if (method.equals(&quot;add&quot;))&#123;</span><br><span class="line">           req.getSession().setAttribute(&quot;msg&quot;,&quot;执行了add方法&quot;);</span><br><span class="line">      &#125;</span><br><span class="line">       if (method.equals(&quot;delete&quot;))&#123;</span><br><span class="line">           req.getSession().setAttribute(&quot;msg&quot;,&quot;执行了delete方法&quot;);</span><br><span class="line">      &#125;</span><br><span class="line">       &#x2F;&#x2F;业务逻辑</span><br><span class="line">       &#x2F;&#x2F;视图跳转</span><br><span class="line">       req.getRequestDispatcher(&quot;&#x2F;WEB-INF&#x2F;jsp&#x2F;hello.jsp&quot;).forward(req,resp);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">   @Override</span><br><span class="line">   protected void doPost(HttpServletRequest req, HttpServletResponse resp) throwsServletException, IOException &#123;</span><br><span class="line">       doGet(req,resp);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>编写Hello.jsp，在WEB-INF目录下新建一个jsp的文件夹，新建hello.jsp</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&lt;%@ page contentType&#x3D;&quot;text&#x2F;html;charset&#x3D;UTF-8&quot; language&#x3D;&quot;java&quot; %&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">   &lt;title&gt;Kuangshen&lt;&#x2F;title&gt;</span><br><span class="line">&lt;&#x2F;head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">$&#123;msg&#125;</span><br><span class="line">&lt;&#x2F;body&gt;</span><br><span class="line">&lt;&#x2F;html&gt;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>在web.xml中注册Servlet</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version&#x3D;&quot;1.0&quot; encoding&#x3D;&quot;UTF-8&quot;?&gt;</span><br><span class="line">&lt;web-app xmlns&#x3D;&quot;http:&#x2F;&#x2F;xmlns.jcp.org&#x2F;xml&#x2F;ns&#x2F;javaee&quot;</span><br><span class="line">        xmlns:xsi&#x3D;&quot;http:&#x2F;&#x2F;www.w3.org&#x2F;2001&#x2F;XMLSchema-instance&quot;</span><br><span class="line">        xsi:schemaLocation&#x3D;&quot;http:&#x2F;&#x2F;xmlns.jcp.org&#x2F;xml&#x2F;ns&#x2F;javaee http:&#x2F;&#x2F;xmlns.jcp.org&#x2F;xml&#x2F;ns&#x2F;javaee&#x2F;web-app_4_0.xsd&quot;</span><br><span class="line">        version&#x3D;&quot;4.0&quot;&gt;</span><br><span class="line">   &lt;servlet&gt;</span><br><span class="line">       &lt;servlet-name&gt;HelloServlet&lt;&#x2F;servlet-name&gt;</span><br><span class="line">       &lt;servlet-class&gt;com.kuang.servlet.HelloServlet&lt;&#x2F;servlet-class&gt;</span><br><span class="line">   &lt;&#x2F;servlet&gt;</span><br><span class="line">   &lt;servlet-mapping&gt;</span><br><span class="line">       &lt;servlet-name&gt;HelloServlet&lt;&#x2F;servlet-name&gt;</span><br><span class="line">       &lt;url-pattern&gt;&#x2F;user&lt;&#x2F;url-pattern&gt;</span><br><span class="line">   &lt;&#x2F;servlet-mapping&gt;</span><br><span class="line"></span><br><span class="line">&lt;&#x2F;web-app&gt;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>配置Tomcat，并启动测试</p>
+</li>
+<li><ul>
+<li>localhost:8080/user?method=add</li>
+<li>localhost:8080/user?method=delete</li>
+</ul>
+</li>
+</ol>
+<p><strong>MVC框架要做哪些事情</strong></p>
+<ol>
+<li>将url映射到java类或java类的方法 .</li>
+<li>封装用户提交的数据 .</li>
+<li>处理请求–调用相关的业务处理–封装响应数据 .</li>
+<li>将响应的数据进行渲染 . jsp / html 等表示层数据 .</li>
+</ol>
+<p><strong>说明：</strong></p>
+<p>​    常见的服务器端MVC框架有：Struts、Spring MVC、ASP.NET MVC、Zend Framework、JSF；常见前端MVC框架：vue、angularjs、react、backbone；由MVC演化出了另外一些模式如：MVP、MVVM 等等….</p>
+<h2 id="2、什么是SpringMVC"><a href="#2、什么是SpringMVC" class="headerlink" title="2、什么是SpringMVC"></a>2、什么是SpringMVC</h2><h3 id="2-1、概述"><a href="#2-1、概述" class="headerlink" title="2.1、概述"></a>2.1、概述</h3><p>Spring MVC是Spring Framework的一部分，是基于Java实现MVC的轻量级Web框架。</p>
+<p>查看官方文档：<a href="https://docs.spring.io/spring/docs/5.2.0.RELEASE/spring-framework-reference/web.html#spring-web" target="_blank" rel="noopener">https://docs.spring.io/spring/docs/5.2.0.RELEASE/spring-framework-reference/web.html#spring-web</a></p>
+<p><strong>我们为什么要学习SpringMVC呢?</strong></p>
+<p> Spring MVC的特点：</p>
+<ol>
+<li>轻量级，简单易学</li>
+<li>高效 , 基于请求响应的MVC框架</li>
+<li>与Spring兼容性好，无缝结合</li>
+<li>约定优于配置</li>
+<li>功能强大：RESTful、数据验证、格式化、本地化、主题等</li>
+<li>简洁灵活</li>
+</ol>
+<p>Spring的web框架围绕<strong>DispatcherServlet</strong> [ 调度Servlet ] 设计。</p>
+<p>DispatcherServlet的作用是将请求分发到不同的处理器。从Spring 2.5开始，使用Java 5或者以上版本的用户可以采用基于注解形式进行开发，十分简洁；</p>
+<p>正因为SpringMVC好 , 简单 , 便捷 , 易学 , 天生和Spring无缝集成(使用SpringIoC和Aop) , 使用约定优于配置 . 能够进行简单的junit测试 . 支持Restful风格 .异常处理 , 本地化 , 国际化 , 数据验证 , 类型转换 , 拦截器 等等……所以我们要学习 .</p>
+<p><strong>最重要的一点还是用的人多 , 使用的公司多 .</strong> </p>
+<h3 id="2-2、中心控制器"><a href="#2-2、中心控制器" class="headerlink" title="2.2、中心控制器"></a>2.2、中心控制器</h3><p>​    Spring的web框架围绕DispatcherServlet设计。DispatcherServlet的作用是将请求分发到不同的处理器。从Spring 2.5开始，使用Java 5或者以上版本的用户可以采用基于注解的controller声明方式。</p>
+<p>​    Spring MVC框架像许多其他MVC框架一样, <strong>以请求为驱动</strong> , <strong>围绕一个中心Servlet分派请求及提供其他功能</strong>，<strong>DispatcherServlet是一个实际的Servlet (它继承自HttpServlet 基类)</strong>。</p>
+<p>SpringMVC的原理如下图所示：<img src="D:%5Cblog%5Csource_posts%5Cimg%5C4.png" alt="4"></p>
+<p>​    当发起请求时被前置的控制器拦截到请求，根据请求参数生成代理请求，找到请求对应的实际控制器，控制器处理请求，创建数据模型，访问数据库，将模型响应给中心控制器，控制器使用模型与视图渲染视图结果，将结果返回给中心控制器，再将结果返回给请求者。</p>
+<h3 id="2-3、SpringMVC执行原理"><a href="#2-3、SpringMVC执行原理" class="headerlink" title="2.3、SpringMVC执行原理"></a>2.3、SpringMVC执行原理</h3><p>pringMVC的一个较完整的流程图，实线表示SpringMVC框架提供的技术，不需要开发者实现，虚线表示需要开发者实现。</p>
+<p><strong>简要分析执行流程</strong></p>
+<ol>
+<li><p>DispatcherServlet表示前置控制器，是整个SpringMVC的控制中心。用户发出请求，DispatcherServlet接收请求并拦截请求。</p>
+<p>我们假设请求的url为 : <a href="http://localhost:8080/SpringMVC/hello" target="_blank" rel="noopener">http://localhost:8080/SpringMVC/hello</a></p>
+</li>
+</ol>
+<p>   <strong>如上url拆分成三部分：</strong></p>
+<p>   <a href="http://localhost:8080服务器域名">http://localhost:8080服务器域名</a></p>
+<p>   SpringMVC部署在服务器上的web站点</p>
+<p>   hello表示控制器</p>
+<p>   通过分析，如上url表示为：请求位于服务器localhost:8080上的SpringMVC站点的hello控制器。</p>
+<ol start="2">
+<li><p>HandlerMapping为处理器映射。DispatcherServlet调用HandlerMapping,HandlerMapping根据请求url查找Handler。</p>
+</li>
+<li><p>HandlerExecution表示具体的Handler,其主要作用是根据url查找控制器，如上url被查找控制器为：hello。</p>
+</li>
+<li><p>HandlerExecution将解析后的信息传递给DispatcherServlet,如解析控制器映射等。</p>
+</li>
+<li><p>HandlerAdapter表示处理器适配器，其按照特定的规则去执行Handler。</p>
+</li>
+<li><p>Handler让具体的Controller执行。</p>
+</li>
+<li><p>Controller将具体的执行信息返回给HandlerAdapter,如ModelAndView。</p>
+</li>
+<li><p>HandlerAdapter将视图逻辑名或模型传递给DispatcherServlet。</p>
+</li>
+<li><p>DispatcherServlet调用视图解析器(ViewResolver)来解析HandlerAdapter传递的逻辑视图名。</p>
+</li>
+<li><p>视图解析器将解析的逻辑视图名传给DispatcherServlet。</p>
+</li>
+<li><p>DispatcherServlet根据视图解析器解析的视图结果，调用具体的视图。</p>
+</li>
+<li><p>最终视图呈现给用户。</p>
+</li>
+</ol>
+<p>在这里先听一遍原理，不理解没有关系，我们马上来写一个对应的代码实现大家就明白了，如果不明白，那就写10遍，没有笨人，只有懒人！</p>
+<p>狂神java视频地址</p>
+<p><a href="https://www.bilibili.com/video/BV1aE41167Tu" target="_blank" rel="noopener">https://www.bilibili.com/video/BV1aE41167Tu</a></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2020/04/10/SringMVC/" data-id="ck8tuekat0001nou98mrvfi3o" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/SpringMVC/" rel="tag">SpringMVC</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2020/04/10/Mybatis/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Mybatis</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hexo/" rel="tag">Hexo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MyBatis/" rel="tag">MyBatis</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SpringMVC/" rel="tag">SpringMVC</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签云</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Hexo/" style="font-size: 10px;">Hexo</a> <a href="/tags/MyBatis/" style="font-size: 10px;">MyBatis</a> <a href="/tags/SpringMVC/" style="font-size: 10px;">SpringMVC</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">四月 2020</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2020/04/10/SringMVC/">SringMVC</a>
+          </li>
+        
+          <li>
+            <a href="/2020/04/10/Mybatis/">Mybatis</a>
+          </li>
+        
+          <li>
+            <a href="/2020/04/10/%E6%88%91%E7%9A%84%E7%AC%AC%E4%B8%80%E7%AF%87%E5%8D%9A%E5%AE%A2%E6%96%87%E7%AB%A0/">我的第一篇博客文章</a>
+          </li>
+        
+          <li>
+            <a href="/2020/04/10/hello-world/">Hello World</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2020 ZhaoDong<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+  
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+  </div>
+</body>
+</html>
